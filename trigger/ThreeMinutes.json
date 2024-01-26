@@ -1,0 +1,17 @@
+{
+	"name": "ThreeMinutes",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 3,
+				"startTime": "2024-01-26T14:57:00",
+				"timeZone": "Arabian Standard Time"
+			}
+		}
+	}
+}
