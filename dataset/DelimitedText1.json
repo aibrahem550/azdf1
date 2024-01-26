@@ -11,7 +11,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "northwind_order_details.csv",
-				"folderPath": "orders"
+				"fileSystem": "orders"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
