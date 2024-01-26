@@ -18,6 +18,47 @@
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "product_id",
+				"type": "String"
+			},
+			{
+				"name": "product_name",
+				"type": "String"
+			},
+			{
+				"name": "supplier_id",
+				"type": "String"
+			},
+			{
+				"name": "category_id",
+				"type": "String"
+			},
+			{
+				"name": "quantity_per_unit",
+				"type": "String"
+			},
+			{
+				"name": "unit_price",
+				"type": "String"
+			},
+			{
+				"name": "units_in_stock",
+				"type": "String"
+			},
+			{
+				"name": "units_on_order",
+				"type": "String"
+			},
+			{
+				"name": "reorder_level",
+				"type": "String"
+			},
+			{
+				"name": "discontinued",
+				"type": "String"
+			}
+		]
 	}
 }
