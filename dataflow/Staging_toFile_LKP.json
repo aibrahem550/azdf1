@@ -19,7 +19,15 @@
 					"name": "productsData"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "TargetRevenuPerProductName",
+						"type": "DatasetReference"
+					},
+					"name": "TargetRevenuPerproduct"
+				}
+			],
 			"transformations": [
 				{
 					"name": "getTotalOrders"
@@ -32,6 +40,9 @@
 				},
 				{
 					"name": "lkpProduct"
+				},
+				{
+					"name": "selectColumns"
 				}
 			],
 			"scriptLines": [
@@ -72,7 +83,28 @@
 				"     pickup: 'first',",
 				"     asc(productsData@product_id, true),",
 				"     partitionBy('hash', 1),",
-				"     broadcast: 'auto')~> lkpProduct"
+				"     broadcast: 'auto')~> lkpProduct",
+				"lkpProduct select(mapColumn(",
+				"          product_id = getTotalOrders@product_id,",
+				"          total_orders,",
+				"          rank,",
+				"          product_name",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectColumns",
+				"selectColumns sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          category_id as string,",
+				"          category_name as string,",
+				"          description as string,",
+				"          picture as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> TargetRevenuPerproduct"
 			]
 		}
 	}
