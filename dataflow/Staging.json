@@ -12,19 +12,65 @@
 					"name": "ordersData"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "LoadTarget"
+				}
+			],
+			"transformations": [
+				{
+					"name": "getTotalOrders"
+				},
+				{
+					"name": "OrdersRank"
+				},
+				{
+					"name": "filterTopFive"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          order_id as string,",
-				"          product_id as string,",
-				"          unit_price as string,",
-				"          quantity as string,",
-				"          discount as string",
+				"          product_id as integer,",
+				"          unit_price as float,",
+				"          quantity as integer,",
+				"          discount as float",
 				"     ),",
 				"     allowSchemaDrift: false,",
 				"     validateSchema: true,",
-				"     ignoreNoFilesFound: false) ~> ordersData"
+				"     ignoreNoFilesFound: false) ~> ordersData",
+				"ordersData aggregate(groupBy(product_id),",
+				"     total_orders = round(sum(unit_price * quantity), 1)) ~> getTotalOrders",
+				"getTotalOrders rank(desc(total_orders, true),",
+				"     caseInsensitive: true,",
+				"     output(rank as long)) ~> OrdersRank",
+				"OrdersRank filter(between(rank, 1, 5)) ~> filterTopFive",
+				"filterTopFive sink(allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     input(",
+				"          product_id as integer,",
+				"          revenue as double,",
+				"          rank as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 1,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          product_id,",
+				"          revenue = total_orders,",
+				"          rank",
+				"     )) ~> LoadTarget"
 			]
 		}
 	}
