@@ -19,9 +19,6 @@
 						"type": "DatasetReference"
 					},
 					"name": "LoadTarget"
-				},
-				{
-					"name": "sink1"
 				}
 			],
 			"transformations": [
@@ -67,17 +64,13 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 1,",
+				"     saveOrder: 0,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          product_id,",
 				"          revenue = total_orders,",
 				"          rank",
-				"     )) ~> LoadTarget",
-				"filterTopFive sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     )) ~> LoadTarget"
 			]
 		}
 	}
