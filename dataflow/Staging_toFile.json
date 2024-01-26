@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "AzureSqlTable1",
+						"referenceName": "DelimitedText2",
 						"type": "DatasetReference"
 					},
 					"name": "LoadTarget"
@@ -52,23 +52,16 @@
 				"filterTopFive sink(allowSchemaDrift: false,",
 				"     validateSchema: false,",
 				"     input(",
-				"          product_id as integer,",
-				"          revenue as double,",
-				"          rank as integer",
+				"          product_id as string,",
+				"          total_orders as string,",
+				"          rank as string",
 				"     ),",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:false,",
-				"     truncate:true,",
-				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 1,",
-				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          product_id,",
-				"          revenue = total_orders,",
+				"          total_orders,",
 				"          rank",
 				"     )) ~> LoadTarget"
 			]
