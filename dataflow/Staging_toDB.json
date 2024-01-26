@@ -19,6 +19,9 @@
 						"type": "DatasetReference"
 					},
 					"name": "LoadTarget"
+				},
+				{
+					"name": "sink1"
 				}
 			],
 			"transformations": [
@@ -70,7 +73,11 @@
 				"          product_id,",
 				"          revenue = total_orders,",
 				"          rank",
-				"     )) ~> LoadTarget"
+				"     )) ~> LoadTarget",
+				"filterTopFive sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
