@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Staging",
+				"name": "Staging_toFile_LKP",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "Staging_toDB",
+						"referenceName": "Staging_toFile_LKP",
 						"type": "DataFlowReference"
 					},
 					"compute": {
