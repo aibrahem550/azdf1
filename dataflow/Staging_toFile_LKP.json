@@ -1,0 +1,79 @@
+{
+	"name": "Staging_toFile_LKP",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "ordersData"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedText3",
+						"type": "DatasetReference"
+					},
+					"name": "productsData"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "getTotalOrders"
+				},
+				{
+					"name": "OrdersRank"
+				},
+				{
+					"name": "filterTopFive"
+				},
+				{
+					"name": "lkpProduct"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          order_id as string,",
+				"          product_id as integer,",
+				"          unit_price as float,",
+				"          quantity as integer,",
+				"          discount as float",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: true,",
+				"     ignoreNoFilesFound: false) ~> ordersData",
+				"source(output(",
+				"          product_id as string,",
+				"          product_name as string,",
+				"          supplier_id as string,",
+				"          category_id as string,",
+				"          quantity_per_unit as string,",
+				"          unit_price as string,",
+				"          units_in_stock as string,",
+				"          units_on_order as string,",
+				"          reorder_level as string,",
+				"          discontinued as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     partitionBy('hash', 1)) ~> productsData",
+				"ordersData aggregate(groupBy(product_id),",
+				"     total_orders = round(sum(unit_price * quantity), 1)) ~> getTotalOrders",
+				"getTotalOrders rank(desc(total_orders, true),",
+				"     caseInsensitive: true,",
+				"     output(rank as long)) ~> OrdersRank",
+				"OrdersRank filter(between(rank, 1, 5)) ~> filterTopFive",
+				"filterTopFive, productsData lookup(getTotalOrders@product_id == productsData@product_id,",
+				"     multiple: false,",
+				"     pickup: 'first',",
+				"     asc(productsData@product_id, true),",
+				"     partitionBy('hash', 1),",
+				"     broadcast: 'auto')~> lkpProduct"
+			]
+		}
+	}
+}
