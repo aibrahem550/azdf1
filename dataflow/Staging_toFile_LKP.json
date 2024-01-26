@@ -46,7 +46,7 @@
 				"     validateSchema: true,",
 				"     ignoreNoFilesFound: false) ~> ordersData",
 				"source(output(",
-				"          product_id as string,",
+				"          product_id as integer,",
 				"          product_name as string,",
 				"          supplier_id as string,",
 				"          category_id as string,",
