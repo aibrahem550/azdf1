@@ -63,7 +63,8 @@
 				"          product_id,",
 				"          total_orders,",
 				"          rank",
-				"     )) ~> LoadTarget"
+				"     ),",
+				"     partitionBy('hash', 1)) ~> LoadTarget"
 			]
 		}
 	}
