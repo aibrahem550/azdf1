@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "northwind_order_details.csv",
+				"fileName": "northwind_order_details_updated.csv",
 				"fileSystem": "orders"
 			},
 			"columnDelimiter": ",",
