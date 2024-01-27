@@ -19,19 +19,19 @@
 		},
 		"schema": [
 			{
-				"name": "category_id",
+				"name": "product_id",
 				"type": "String"
 			},
 			{
-				"name": "category_name",
+				"name": "total_orders",
 				"type": "String"
 			},
 			{
-				"name": "description",
+				"name": "rank",
 				"type": "String"
 			},
 			{
-				"name": "picture",
+				"name": "product_name",
 				"type": "String"
 			}
 		]
