@@ -95,16 +95,22 @@
 				"selectColumns sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          category_id as string,",
-				"          category_name as string,",
-				"          description as string,",
-				"          picture as string",
+				"          product_id as string,",
+				"          total_orders as string,",
+				"          rank as string,",
+				"          product_name as string",
 				"     ),",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> TargetRevenuPerproduct"
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          product_id,",
+				"          total_orders,",
+				"          rank,",
+				"          product_name",
+				"     )) ~> TargetRevenuPerproduct"
 			]
 		}
 	}
