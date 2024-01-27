@@ -1,0 +1,36 @@
+{
+	"name": "top5_products_by_revenue",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "product_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "total_orders",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "rank",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "product_name",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "top5_products_by_revenue"
+		}
+	}
+}
