@@ -100,6 +100,7 @@
 				"          rank as string,",
 				"          product_name as string",
 				"     ),",
+				"     filePattern:(concat('total_revenue_by_product_',toString(month(currentDate())))),",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
