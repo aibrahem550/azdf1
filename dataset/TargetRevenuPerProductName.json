@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "part-00000-0c0aece4-19d4-47d5-a804-407663d1aae1-c000.csv",
 				"fileSystem": "orders"
 			},
 			"columnDelimiter": ",",
